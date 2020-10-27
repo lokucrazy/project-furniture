@@ -4,20 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "lokucrazy-node-server"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/lodash": "^4.14.162",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.12.0",
     "live-server": "^1.2.1",
-    "lodash": "^4.17.20",
+    "lokucrazy-node-server": "file:../lokucrazy-node-server",
     "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "lodash-cli": "^4.17.5"
   }
 }
