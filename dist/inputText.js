@@ -22,7 +22,7 @@ export default class InputText {
             this.ctx.clearRect(this.inputLineX, (this.canvas.height * .9) + 15, 5, 30);
         }
     }
-    typeText(event) {
+    typeText(event, callback) {
         const key = event.key;
         if ((key.length > 1 && key !== 'Enter' && key !== 'Backspace'))
             return;
@@ -31,6 +31,7 @@ export default class InputText {
         this.ctx.fillStyle = 'white';
         switch (key) {
             case 'Enter':
+                callback === null || callback === void 0 ? void 0 : callback(this.inputText);
                 this.inputText = '';
                 this.inputLineX = 10;
                 break;
@@ -39,8 +40,10 @@ export default class InputText {
                 this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3;
                 break;
             default:
-                this.inputText = `${this.inputText}${key}`;
-                this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3;
+                if (!this.lineLimitReached(`${this.inputText}${key}`)) {
+                    this.inputText = `${this.inputText}${key}`;
+                    this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3;
+                }
         }
         this.ctx.fillText(this.inputText, 10, (this.canvas.height * .9) + 40, this.canvas.width - 20);
     }
@@ -57,5 +60,12 @@ export default class InputText {
             blink = !blink;
             this.inputTextLine(blink);
         };
+    }
+    lineLimitReached(text) {
+        const textMetric = this.ctx.measureText(text);
+        if ((this.canvas.width - 10) - textMetric.width <= 20) {
+            return true;
+        }
+        return false;
     }
 }

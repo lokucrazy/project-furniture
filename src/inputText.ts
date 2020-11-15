@@ -1,5 +1,4 @@
 export default class InputText {
-
   constructor(
     private canvas: HTMLCanvasElement,
     private ctx: CanvasRenderingContext2D,
@@ -25,7 +24,7 @@ export default class InputText {
     }
   }
 
-  typeText(event: Event): void {
+  typeText(event: Event, callback?: (text: string) => void): void {
     const key = (event as KeyboardEvent).key
     if ((key.length > 1 && key !== 'Enter' && key !== 'Backspace')) return
     this.ctx.font = '32px serif'
@@ -33,6 +32,7 @@ export default class InputText {
     this.ctx.fillStyle = 'white'
     switch(key) {
       case 'Enter':
+        callback?.(this.inputText)
         this.inputText = ''
         this.inputLineX = 10
         break
@@ -41,8 +41,10 @@ export default class InputText {
         this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3
         break
       default:
-        this.inputText = `${this.inputText}${key}`
-        this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3
+        if (!this.lineLimitReached(`${this.inputText}${key}`)) {
+          this.inputText = `${this.inputText}${key}`
+          this.inputLineX = 10 + this.ctx.measureText(this.inputText).width + 3
+        }
     }
     this.ctx.fillText(this.inputText, 10, (this.canvas.height * .9) + 40, this.canvas.width - 20)
   }
@@ -61,5 +63,13 @@ export default class InputText {
       blink = !blink
       this.inputTextLine(blink)
     }
+  }
+
+  private lineLimitReached(text: string): boolean {
+    const textMetric = this.ctx.measureText(text)
+    if ((this.canvas.width - 10) - textMetric.width <= 20) {
+      return true
+    }
+    return false
   }
 }
