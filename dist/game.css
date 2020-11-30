@@ -3,3 +3,63 @@
 html, body { width:100%; height:100%; } /* just to be sure these are full screen*/
 
 canvas { display:block; } /* To remove the scrollbars */
+
+textarea {
+  resize: none;
+  outline: 0;
+}
+
+.terminal-input-container {
+  position: absolute;
+  bottom: 0;
+  float: left;
+  width: 100%;
+  height: 10%;
+}
+
+.terminal-output-container {
+  position: absolute;
+  top: 0;
+  float: left;
+  width: 100%;
+  height: 90%;
+}
+
+.terminal-input-container > .terminal-input {
+  padding: 5px;
+  position: relative;
+  width: inherit;
+  height: 100%;
+  left: 0;
+  background-color: black;
+  color: white;
+  border-width: 10px;
+  border-color: #0bbf9b;
+  font: 500 32px serif;
+  box-sizing: border-box;
+  border-radius: 0;
+}
+
+.terminal-output-container > .terminal-output {
+  padding: 5px;
+  position: relative;
+  width: inherit;
+  height: 100%;
+  left: 0;
+  background-color: black;
+  color: white;
+  border-width: 10px;
+  border-color: #bf0b50;
+  font: 500 16px serif;
+  box-sizing: border-box;
+}
+
+.terminal-output-container > .graphics {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  float: left;
+  border: 10px solid transparent;
+  box-sizing: border-box;
+}
